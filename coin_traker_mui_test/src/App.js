@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Item from "./components/Item";
 
 
 function App() {
@@ -11,7 +12,6 @@ function App() {
       .then((response => response.json()))
       .then((json) => {
         setCoins(json)
-        console.log(json)
         setLoading(false)
       })
   }, [])
@@ -20,13 +20,17 @@ function App() {
   return (
     <div>
       <h1>The Coins! {loading ? "" : `(${coins.length})`}</h1>
-      {loading ? <strong>...Loading</strong> : <select>
+      {loading ? <strong>...Loading</strong> : <ul>
         {coins.map((coin) => (
-          <option>
-            {coin.name} ({coin.symbol}) : ${coin.quotes.USD.price} USD
-          </option>
+          <li>
+            <Item
+              name={coin.name}
+              symbol={coin.symbol}
+              price={coin.quotes.USD.price}
+            />
+          </li>
         ))}
-      </select>}
+      </ul>}
 
     </div>
   );
