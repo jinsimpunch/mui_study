@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Item from "./components/Item";
-
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 function App() {
 
@@ -16,14 +17,23 @@ function App() {
       })
   }, [])
 
-
+  console.log(coins)
   return (
-    <div>
-      <h1>The Coins! {loading ? "" : `(${coins.length})`}</h1>
+    <Container fixed sx={{ bgcolor: '#cfe8fc' }}>
+      <Grid container >
+        <Grid item xs={10}>
+          The Coins!
+        </Grid>
+        {loading ?
+          <Grid item xs={2}>"" </Grid> :
+          <Grid item xs={2}> ({coins.length})</Grid>
+        }
+      </Grid>
       {loading ? <strong>...Loading</strong> : <ul>
         {coins.map((coin) => (
-          <li>
+          <li key={coin.id}>
             <Item
+
               name={coin.name}
               symbol={coin.symbol}
               price={coin.quotes.USD.price}
@@ -32,7 +42,7 @@ function App() {
         ))}
       </ul>}
 
-    </div>
+    </Container>
   );
 }
 
